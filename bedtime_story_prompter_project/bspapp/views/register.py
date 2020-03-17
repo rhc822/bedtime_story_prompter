@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth import login
 from django.contrib.auth.models import User
-from bspapp.models import Parent
+from ..models import Parent
 
 def register_user(request):
     """View method for handling creation of a new user for auth
@@ -32,7 +32,7 @@ def register_user(request):
         login(request, new_user)
 
         # Redirect the browser to wherever you want to go after registering
-        return redirect(reverse('bspapp:books'))
+        return redirect(reverse('home'))
 
     # handles a request to load the empty form for the useer to fill out
     else:

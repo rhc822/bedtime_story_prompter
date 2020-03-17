@@ -18,6 +18,7 @@ from django.urls import path
 from bspapp.views import *
 
 urlpatterns = [
+    path('', home, name='home'),
     path('admin/', admin.site.urls),
     path('register/', register_user, name="register")
 ]
