@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth import login
 from django.contrib.auth.models import User
-from ..models import Parent
+from ..models.kid import Kid
+
 
 def register_user(request):
     """View method for handling creation of a new user for auth
@@ -16,15 +17,12 @@ def register_user(request):
         # First create a new user using django's built in craziness. create_user is a method in django.
         new_user = User.objects.create_user(
             username=request.POST['username'],
-            email=request.POST['email'],
-            password=request.POST['password'],
-            first_name=request.POST['first_name'],
-            last_name=request.POST['last_name']
+            password=request.POST['password']
         )
 
-        # Second, make a librarian after the user has been created
-        parent = Parent.objects.create(
-            user=new_user,
+        # Second, make a kid after the user has been created
+        kid = Kid.objects.create(
+            user_id=new_user,
             # If you have other form data to save on the new librarian, that isn't a property of the User model...
             kid_first_name=request.POST['kid_first_name']
         )
