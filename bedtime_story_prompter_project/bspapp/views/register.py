@@ -22,7 +22,7 @@ def register_user(request):
 
         # Second, make a kid after the user has been created
         kid = Kid.objects.create(
-            user_id=new_user,
+            user=new_user,
             # If you have other form data to save on the new librarian, that isn't a property of the User model...
             kid_first_name=request.POST['kid_first_name']
         )
