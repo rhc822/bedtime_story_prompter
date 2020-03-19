@@ -1,1 +1,16 @@
-<h1>Welcome home my child</h1>
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Story List view</title>
+  </head>
+  <body>
+    {% for kid in kids %}
+        <h1>{{ kid.kid_first_name}}'s story prompts</h1>
+        {% for storyprompt in kid.storyprompt_set.all %}
+             <p>{{storyprompt}}</p>
+        {% endfor %}
+    {% endfor %}
+  </body>
+</html>
