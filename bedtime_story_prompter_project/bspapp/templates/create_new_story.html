@@ -11,8 +11,8 @@
     {% for kid in kids %}
         <option value="kid_name">{{ kid.kid_first_name}}</option>
     {% endfor %}
-
     </select>
+    {% comment %} <textarea>{% random.choice({{kid.kid_first_name}}) %} This is a text area... And it is good.</textarea> {% endcomment %}
 
   </body>
 </html>
