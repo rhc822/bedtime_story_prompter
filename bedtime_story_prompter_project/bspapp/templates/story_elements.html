@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Story element view</title>
+  </head>
+  <body>
+    {% for user in users %}
+        <h1>Heroes</h1>
+        {% for hero in user.hero_set.all %}
+            <p>{{ hero }}</p>
+        {% endfor %}
+        <h1>Villains</h1>
+        {% for villain in user.villain_set.all %}
+            <p>{{ villain }}</p>
+        {% endfor %}
+        <h1>Settings</h1>
+        {% for setting in user.storysetting_set.all %}
+            <p>{{ setting }}</p>
+        {% endfor %}
+        <h1>Challenges</h1>
+        {% for challenge in user.challenge_set.all %}
+            <p>{{ challenge }}</p>
+        {% endfor %}
+        <h1>Story templates</h1>
+        {% for template in user.storytemplate_set.all %}
+            <p>{{ template }}</p>
+        {% endfor %}
+        {% comment %} {% for storyprompt in kid.storyprompt_set.all %}
+             <p>{{storyprompt}}</p>
+        {% endfor %} {% endcomment %}
+    {% endfor %}
+  </body>
+</html>
