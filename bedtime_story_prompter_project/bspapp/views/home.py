@@ -1,11 +1,13 @@
 from django.shortcuts import render
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from ..models.kid import Kid
 
 @login_required
 def home(request):
     if request.method == 'GET':
-        kids = Kid.objects.all()
+        user = User.objects.get(pk=request.user.id)
+        kids = Kid.objects.filter(user_id=user.id)
         for kid in kids:
             for storyprompt in kid.storyprompt_set.all():
                 print(storyprompt) # This prints the story prompts in the terminal.

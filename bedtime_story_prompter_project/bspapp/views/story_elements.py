@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from ..models.challenge import Challenge
 from ..models.hero import Hero
 from ..models.villain import Villain
@@ -11,12 +11,13 @@ from ..models.story_setting import StorySetting
 @login_required
 def story_elements(request):
      if request.method == 'GET':
-        users = User.objects.all()
-        for user in users:
-            print("**********************", user.hero_set.all())
+        user = User.objects.get(pk=request.user.id)
+        # print(user.hero_set.all())
+        # for user in users:
+        #     print("**********************", user.hero_set.all())
         template = 'story_elements.html'
         context = {
-            "users": users
+            "user": user
         }
 
         return render(request, template, context)

@@ -12,8 +12,10 @@ from ..models.story_setting import StorySetting
 @login_required
 def create_new_story(request):
      if request.method == 'GET':
-        kids = Kid.objects.all()
-        users = User.objects.all()
+        template = StoryTemplate.objects.all()
+        print(template)
+        # kids = Kid.objects.all()
+        # users = User.objects.all()
 
         template = 'create_new_story.html'
         context = {
