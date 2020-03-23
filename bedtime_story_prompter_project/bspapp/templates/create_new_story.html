@@ -6,13 +6,20 @@
     <title>Create New Story View</title>
   </head>
   <body>
-    <label for="kids">Choose a kid:</label>
-    <select id="kids">
-    {% for kid in kids %}
-        <option value="kid_name">{{ kid.kid_first_name}}</option>
-    {% endfor %}
-    </select>
-    {% comment %} <textarea>{% random.choice({{kid.kid_first_name}}) %} This is a text area... And it is good.</textarea> {% endcomment %}
+    <form action="{% url 'create_new_story' %}" method="post">
+        {% csrf_token %}
+            <h1>Story for {{kids.kid_first_name}}</h1>
+            {% comment %} <label for="kids">Choose a kid:</label>
+            <select id="kids">
+            {% for kid in kids %}
+                <option value="kid_name">{{ kid.kid_first_name}}</option>
+            {% endfor %} {% endcomment %}
+            </select>
+            <textarea rows="5" cols="100" name="text">
+                {{story_prompt}}
+            </textarea>
+            <input type="submit" value="Save Story Prompt" />
+    </form>
 
   </body>
 </html>
