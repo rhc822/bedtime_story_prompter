@@ -20,8 +20,8 @@ def create_new_story(request):
         random_villain = random.choice(Villain.objects.all())
         random_challenge = random.choice(Challenge.objects.all())
         random_hero = random.choice(Hero.objects.all())
-        print("---------------\n", random_hero, "\n---------------")
-
+        story_prompt = str(random_template).replace("hero", str(random_hero))
+        print("---------------\n", story_prompt, "\n---------------")
 
         template = 'create_new_story.html'
         context = {
