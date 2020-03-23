@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Permission
+from django.shortcuts import reverse, redirect
 from ..models.challenge import Challenge
 from ..models.hero import Hero
 from ..models.villain import Villain
@@ -10,7 +11,7 @@ from ..models.story_setting import StorySetting
 
 @login_required
 def story_elements(request):
-     if request.method == 'GET':
+    if request.method == 'GET':
         user = User.objects.get(pk=request.user.id)
         # print(user.hero_set.all())
         # for user in users:
@@ -21,6 +22,20 @@ def story_elements(request):
         }
 
         return render(request, template, context)
+
+    elif request.method == 'POST':
+        form_data = request.POST
+        user = User.objects.get(pk=request.user.id)
+        # kid = Kid.objects.filter(user_id=user.id)
+        new_hero = Hero(
+            name = form_data["hero"],
+            user = user
+        )
+        new_hero.save()
+
+
+        return redirect(reverse('story_elements'))
+
 
     # if request.method == 'GET':
 
