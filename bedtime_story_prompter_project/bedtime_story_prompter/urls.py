@@ -25,4 +25,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('logout/', logout_user, name='logout'),
     path('storyelements/', story_elements, name='story_elements'),
+    path('create_new_story/', create_new_story, name='create_new_story')
 ]
