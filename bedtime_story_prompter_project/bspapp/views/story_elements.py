@@ -26,12 +26,46 @@ def story_elements(request):
     elif request.method == 'POST':
         form_data = request.POST
         user = User.objects.get(pk=request.user.id)
+        # print("******************** HERO", form_data["hero"])
+        # print("******************** Villain", form_data["villain"])
         # kid = Kid.objects.filter(user_id=user.id)
-        new_hero = Hero(
-            name = form_data["hero"],
-            user = user
-        )
-        new_hero.save()
+        try:
+            new_hero = Hero(
+                name = form_data["hero"],
+                user = user
+            )
+            new_hero.save()
+
+        except:
+            try:
+                new_villain = Villain(
+                    name = form_data["villain"],
+                    user = user
+                )
+                new_villain.save()
+
+            except:
+                try:
+                    new_setting = StorySetting(
+                        description = form_data["setting"],
+                        user = user
+                    )
+                    new_setting.save()
+
+                except:
+                    try:
+                        new_challenge = Challenge(
+                            description = form_data["challenge"],
+                            user = user
+                        )
+                        new_challenge.save()
+
+                    except:
+                        new_template = StoryTemplate(
+                            template = form_data["template"],
+                            user = user
+                        )
+                        new_template.save()
 
 
         return redirect(reverse('story_elements'))
