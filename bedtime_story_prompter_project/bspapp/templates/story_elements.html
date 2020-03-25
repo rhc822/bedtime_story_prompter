@@ -12,19 +12,19 @@
     <meta charset="utf-8">
     <title>Story element view</title>
   </head>
+
   <body>
         <h1>Heroes</h1>
             <a class="w3-button" onclick="document.getElementById('id01').style.display='block'">
                 <i class="fas fa-plus-circle" ></i>
             </a>
         {% for hero in user.hero_set.all %}
-            <form action="{% url 'story_elements' %}" method="POST">
+            <form action="{% url 'hero_element' hero_id=hero.id %}" method="POST">
                 {% csrf_token %}
                 <label for={{ hero.id }}>{{ hero }}</label>
-                <input id={{ hero.id }} type="hidden" name="actual_method" value="DELETE">
+                <input type="hidden" name="actual_method" value="DELETE">
                 <button>Delete</button>
             </form>
-            <p></p>
         {% endfor %}
 
         <h1>Villains</h1>
@@ -32,7 +32,12 @@
                 <i class="fas fa-plus-circle"></i>
             </a>
         {% for villain in user.villain_set.all %}
-            <p>{{ villain }}</p>
+            <form action="{% url 'villain_element' villain_id=villain.id %}" method="POST">
+                {% csrf_token %}
+                <label for={{ villain.id }}>{{ villain }}</label>
+                <input type="hidden" name="actual_method" value="DELETE">
+                <button>Delete</button>
+            </form>
         {% endfor %}
 
         <h1>Settings</h1>
@@ -40,7 +45,12 @@
                 <i class="fas fa-plus-circle"></i>
             </a>
         {% for setting in user.storysetting_set.all %}
-            <p>{{ setting }}</p>
+            <form action="{% url 'setting_element' setting_id=setting.id %}" method="POST">
+                {% csrf_token %}
+                <label for={{ setting.id }}>{{ setting }}</label>
+                <input type="hidden" name="actual_method" value="DELETE">
+                <button>Delete</button>
+            </form>
         {% endfor %}
 
         <h1>Challenges</h1>
@@ -48,7 +58,12 @@
                 <i class="fas fa-plus-circle"></i>
             </a>
         {% for challenge in user.challenge_set.all %}
-            <p>{{ challenge }}</p>
+            <form action="{% url 'challenge_element' challenge_id=challenge.id %}" method="POST">
+                {% csrf_token %}
+                <label for={{ challenge.id }}>{{ challenge }}</label>
+                <input type="hidden" name="actual_method" value="DELETE">
+                <button>Delete</button>
+            </form>
         {% endfor %}
 
         <h1>Story templates</h1>
@@ -56,11 +71,16 @@
                 <i class="fas fa-plus-circle"></i>
             </a>
         {% for template in user.storytemplate_set.all %}
-            <p>{{ template }}</p>
+            <form action="{% url 'template_element' template_id=template.id %}" method="POST">
+                {% csrf_token %}
+                <label for={{ template.id }}>{{ template }}</label>
+                <input type="hidden" name="actual_method" value="DELETE">
+                <button>Delete</button>
+            </form>
         {% endfor %}
-        {% for storyprompt in kid.storyprompt_set.all %}
+        {% comment %} {% for storyprompt in kid.storyprompt_set.all %}
              <p>{{storyprompt}}</p>
-        {% endfor %}
+        {% endfor %} {% endcomment %}
 
         <!-- THE LIST OF MODALS FOR EACH STORY ELEMENTS -->
 
