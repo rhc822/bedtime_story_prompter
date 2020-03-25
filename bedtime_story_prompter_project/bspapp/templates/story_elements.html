@@ -1,33 +1,181 @@
+{% extends 'shared/base.html' %}
+{% block content %}
 {% load static %}
+
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- The link below is access to W3C CSS framework -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+     <!-- The link below is access for font awesome icons -->
+    <script src="https://kit.fontawesome.com/5669f665f1.js" crossorigin="anonymous"></script>
     <meta charset="utf-8">
     <title>Story element view</title>
   </head>
+
   <body>
         <h1>Heroes</h1>
+            <a class="w3-button" onclick="document.getElementById('id01').style.display='block'">
+                <i class="fas fa-plus-circle" ></i>
+            </a>
         {% for hero in user.hero_set.all %}
-            <p>{{ hero }}</p>
+            <form action="{% url 'hero_element' hero_id=hero.id %}" method="POST">
+                {% csrf_token %}
+                <label for={{ hero.id }}>{{ hero }}</label>
+                <input type="hidden" name="actual_method" value="DELETE">
+                <button>Delete</button>
+            </form>
         {% endfor %}
+
         <h1>Villains</h1>
+            <a class="w3-button" onclick="document.getElementById('id02').style.display='block'">
+                <i class="fas fa-plus-circle"></i>
+            </a>
         {% for villain in user.villain_set.all %}
-            <p>{{ villain }}</p>
+            <form action="{% url 'villain_element' villain_id=villain.id %}" method="POST">
+                {% csrf_token %}
+                <label for={{ villain.id }}>{{ villain }}</label>
+                <input type="hidden" name="actual_method" value="DELETE">
+                <button>Delete</button>
+            </form>
         {% endfor %}
+
         <h1>Settings</h1>
+            <a class="w3-button" onclick="document.getElementById('id03').style.display='block'">
+                <i class="fas fa-plus-circle"></i>
+            </a>
         {% for setting in user.storysetting_set.all %}
-            <p>{{ setting }}</p>
+            <form action="{% url 'setting_element' setting_id=setting.id %}" method="POST">
+                {% csrf_token %}
+                <label for={{ setting.id }}>{{ setting }}</label>
+                <input type="hidden" name="actual_method" value="DELETE">
+                <button>Delete</button>
+            </form>
         {% endfor %}
+
         <h1>Challenges</h1>
+            <a class="w3-button" onclick="document.getElementById('id04').style.display='block'">
+                <i class="fas fa-plus-circle"></i>
+            </a>
         {% for challenge in user.challenge_set.all %}
-            <p>{{ challenge }}</p>
+            <form action="{% url 'challenge_element' challenge_id=challenge.id %}" method="POST">
+                {% csrf_token %}
+                <label for={{ challenge.id }}>{{ challenge }}</label>
+                <input type="hidden" name="actual_method" value="DELETE">
+                <button>Delete</button>
+            </form>
         {% endfor %}
+
         <h1>Story templates</h1>
+            <a class="w3-button" onclick="document.getElementById('id05').style.display='block'">
+                <i class="fas fa-plus-circle"></i>
+            </a>
         {% for template in user.storytemplate_set.all %}
-            <p>{{ template }}</p>
+            <form action="{% url 'template_element' template_id=template.id %}" method="POST">
+                {% csrf_token %}
+                <label for={{ template.id }}>{{ template }}</label>
+                <input type="hidden" name="actual_method" value="DELETE">
+                <button>Delete</button>
+            </form>
         {% endfor %}
-        {% for storyprompt in kid.storyprompt_set.all %}
+        {% comment %} {% for storyprompt in kid.storyprompt_set.all %}
              <p>{{storyprompt}}</p>
-        {% endfor %}
+        {% endfor %} {% endcomment %}
+
+        <!-- THE LIST OF MODALS FOR EACH STORY ELEMENTS -->
+
+        <!--Hero modal-->
+        <div id="id01" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                <span onclick="document.getElementById('id01').style.display='none'"
+                class="w3-button w3-display-topright">&times;</span>
+                <form class="w3-container" action="{% url 'story_elements' %}" method="post">
+                    {% csrf_token %}
+                        <div class="w3-section">
+                        <label></label>
+                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter a new hero's name" name="hero" required>
+                        <button type="submit" class="w3-button w3-block w3-green w3-section w3-padding">Create</button>
+                        </div>
+                </form>
+                </div>
+            </div>
+        </div>
+
+        <!--Villain modal-->
+        <div id="id02" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                <span onclick="document.getElementById('id02').style.display='none'"
+                class="w3-button w3-display-topright">&times;</span>
+                <form class="w3-container" action="{% url 'story_elements' %}" method="post">
+                    {% csrf_token %}
+                        <div class="w3-section">
+                        <label></label>
+                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter a new villain's name" name="villain" required>
+                        <button type="submit" class="w3-button w3-block w3-green w3-section w3-padding">Create</button>
+                        </div>
+                </form>
+                </div>
+            </div>
+        </div>
+
+        <!--Setting modal-->
+        <div id="id03" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                <span onclick="document.getElementById('id03').style.display='none'"
+                class="w3-button w3-display-topright">&times;</span>
+                <form class="w3-container" action="{% url 'story_elements' %}" method="post">
+                    {% csrf_token %}
+                        <div class="w3-section">
+                        <label></label>
+                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter a new setting" name="setting" required>
+                        <button type="submit" class="w3-button w3-block w3-green w3-section w3-padding">Create</button>
+                        </div>
+                </form>
+                </div>
+            </div>
+        </div>
+
+        <!--Challenge modal-->
+        <div id="id04" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                <span onclick="document.getElementById('id04').style.display='none'"
+                class="w3-button w3-display-topright">&times;</span>
+                <form class="w3-container" action="{% url 'story_elements' %}" method="post">
+                    {% csrf_token %}
+                        <div class="w3-section">
+                        <label></label>
+                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter a new challenge/obstacle for the hero" name="challenge" required>
+                        <button type="submit" class="w3-button w3-block w3-green w3-section w3-padding">Create</button>
+                        </div>
+                </form>
+                </div>
+            </div>
+        </div>
+
+        <!--Story template modal-->
+        <div id="id05" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                <span onclick="document.getElementById('id05').style.display='none'"
+                class="w3-button w3-display-topright">&times;</span>
+                <form class="w3-container" action="{% url 'story_elements' %}" method="post">
+                    {% csrf_token %}
+                        <div class="w3-section">
+                        <label></label>
+                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter a new story template" name="template" required>
+                        <button type="submit" class="w3-button w3-block w3-green w3-section w3-padding">Create</button>
+                        </div>
+                </form>
+                </div>
+            </div>
+        </div>
+
+
   </body>
 </html>
+
+{% endblock %}
