@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include, path
 from bspapp.views import *
@@ -24,6 +25,8 @@ urlpatterns = [
     path('register/', register_user, name="register"),
     path('accounts/', include('django.contrib.auth.urls')),
     path('logout/', logout_user, name='logout'),
-    path('storyelements/', story_elements, name='story_elements'),
-    path('create_new_story/', create_new_story, name='create_new_story')
+    path('create_new_story/', create_new_story, name='create_new_story'),
+    # path('storyelements/', story_elements, name='story_elements'),
+    url(r'^storyelements/$', story_elements, name='story_elements')
+
 ]

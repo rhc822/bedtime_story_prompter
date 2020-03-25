@@ -1,4 +1,7 @@
+{% extends 'shared/base.html' %}
+{% block content %}
 {% load static %}
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -14,11 +17,14 @@
             <a class="w3-button" onclick="document.getElementById('id01').style.display='block'">
                 <i class="fas fa-plus-circle" ></i>
             </a>
-        <!-- I've kept this original modal access button here only as a fallback if needed -->
-        {% comment %} <button onclick="document.getElementById('id01').style.display='block'"
-class="">Create new hero</button> {% endcomment %}
         {% for hero in user.hero_set.all %}
-            <p>{{ hero }}</p>
+            <form action="{% url 'story_elements' %}" method="POST">
+                {% csrf_token %}
+                <label for={{ hero.id }}>{{ hero }}</label>
+                <input id={{ hero.id }} type="hidden" name="actual_method" value="DELETE">
+                <button>Delete</button>
+            </form>
+            <p></p>
         {% endfor %}
 
         <h1>Villains</h1>
@@ -151,3 +157,5 @@ class="">Create new hero</button> {% endcomment %}
 
   </body>
 </html>
+
+{% endblock %}

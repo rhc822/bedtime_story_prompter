@@ -24,48 +24,56 @@ def story_elements(request):
         return render(request, template, context)
 
     elif request.method == 'POST':
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!REQUEST.POST [HERO.ID]", request.POST)
         form_data = request.POST
         user = User.objects.get(pk=request.user.id)
+        if ("actual_method" in form_data and form_data["actual_method"] == "DELETE"):
+            print("hello")
+            # hero = Hero.objects.get(pk=hero_id)
+            # hero.delete()
+
         # print("******************** HERO", form_data["hero"])
         # print("******************** Villain", form_data["villain"])
         # kid = Kid.objects.filter(user_id=user.id)
-        try:
-            new_hero = Hero(
-                name = form_data["hero"],
-                user = user
-            )
-            new_hero.save()
 
-        except:
+        else:
             try:
-                new_villain = Villain(
-                    name = form_data["villain"],
+                new_hero = Hero(
+                    name = form_data["hero"],
                     user = user
                 )
-                new_villain.save()
+                new_hero.save()
 
             except:
                 try:
-                    new_setting = StorySetting(
-                        description = form_data["setting"],
+                    new_villain = Villain(
+                        name = form_data["villain"],
                         user = user
                     )
-                    new_setting.save()
+                    new_villain.save()
 
                 except:
                     try:
-                        new_challenge = Challenge(
-                            description = form_data["challenge"],
+                        new_setting = StorySetting(
+                            description = form_data["setting"],
                             user = user
                         )
-                        new_challenge.save()
+                        new_setting.save()
 
                     except:
-                        new_template = StoryTemplate(
-                            template = form_data["template"],
-                            user = user
-                        )
-                        new_template.save()
+                        try:
+                            new_challenge = Challenge(
+                                description = form_data["challenge"],
+                                user = user
+                            )
+                            new_challenge.save()
+
+                        except:
+                            new_template = StoryTemplate(
+                                template = form_data["template"],
+                                user = user
+                            )
+                            new_template.save()
 
 
         return redirect(reverse('story_elements'))
