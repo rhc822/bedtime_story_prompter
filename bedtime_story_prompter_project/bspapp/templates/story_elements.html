@@ -25,6 +25,13 @@
                 <input type="hidden" name="actual_method" value="DELETE">
                 <button>Delete</button>
             </form>
+            <form action="{% url 'hero_element' hero_id=hero.id %}" method="POST">
+                {% csrf_token %}
+                <input type="text" id="hero" name="hero" value="{{ hero }}">
+                <input type="hidden" name="actual_method" value="PUT">
+                <button>Update</button>
+                {% comment %} <input type="submit" value="Update" /> {% endcomment %}
+            </form>
         {% endfor %}
 
         <h1>Villains</h1>

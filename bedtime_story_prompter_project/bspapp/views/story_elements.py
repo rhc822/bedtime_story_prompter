@@ -29,6 +29,13 @@ def story_elements(request, hero_id=None, villain_id=None, setting_id=None, chal
             hero.delete()
             return redirect(reverse('story_elements'))
 
+        if ("actual_method" in form_data and form_data["actual_method"] == "PUT") and hero_id is not None:
+            print("----------------FORM DATA AFTER CLICKING UPDATE", form_data)
+            hero = Hero.objects.get(pk=hero_id)
+            hero.name = form_data["hero"]
+            hero.save()
+            return redirect(reverse('story_elements'))
+
         if ("actual_method" in form_data and form_data["actual_method"] == "DELETE") and villain_id is not None:
             villain = Villain.objects.get(pk=villain_id)
             villain.delete()
