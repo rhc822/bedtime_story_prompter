@@ -52,12 +52,15 @@
                 <input type="hidden" name="actual_method" value="DELETE">
                 <button>Delete</button>
             </form>
-            <form action=" {% url 'villain_element' villain_id=villain.id %}" method="POST">
-                {% csrf_token %}
-                <input type="text" id="villain" name="villain" value="{{ villain }}">
-                <input type="hidden" name="actual_method" value="PUT">
-                <button>Update</button>
-            </form>
+            <div class="editForm-{{villain.id}} isHidden">
+                <form action=" {% url 'villain_element' villain_id=villain.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" id="villain" name="villain" value="{{ villain }}">
+                    <input type="hidden" name="actual_method" value="PUT">
+                    <button>Update</button>
+                </form>
+            </div>
+            <button id="editBtn-{{villain.id}}" class="editBtn">Edit</button>
         {% endfor %}
 
         <h1>Settings</h1>
@@ -71,12 +74,15 @@
                 <input type="hidden" name="actual_method" value="DELETE">
                 <button>Delete</button>
             </form>
-            <form action=" {% url 'setting_element' setting_id=setting.id %}" method="POST">
-                {% csrf_token %}
-                    <input type="text" id="setting" name="setting" value="{{ setting }}">
-                    <input type="hidden" name="actual_method" value="PUT">
-                    <button>Update</button>
-            </form>
+            <div class="editForm-{{setting.id}} isHidden">
+                <form action=" {% url 'setting_element' setting_id=setting.id %}" method="POST">
+                    {% csrf_token %}
+                        <input type="text" id="setting" name="setting" value="{{ setting }}">
+                        <input type="hidden" name="actual_method" value="PUT">
+                        <button>Update</button>
+                </form>
+            </div>
+            <button id="editBtn-{{setting.id}}" class="editBtn">Edit</button>
         {% endfor %}
 
         <h1>Challenges</h1>
@@ -90,12 +96,15 @@
                 <input type="hidden" name="actual_method" value="DELETE">
                 <button>Delete</button>
             </form>
-            <form action=" {% url 'challenge_element' challenge_id=challenge.id %}" method="POST">
-                {% csrf_token %}
-                    <input type="text" id="challenge" name="challenge" value="{{ challenge }}">
-                    <input type="hidden" name="actual_method" value="PUT">
-                    <button>Update</button>
-            </form>
+            <div class="editForm-{{challenge.id}} isHidden">
+                <form action=" {% url 'challenge_element' challenge_id=challenge.id %}" method="POST">
+                    {% csrf_token %}
+                        <input type="text" id="challenge" name="challenge" value="{{ challenge }}">
+                        <input type="hidden" name="actual_method" value="PUT">
+                        <button>Update</button>
+                </form>
+            </div>
+            <button id="editBtn-{{challenge.id}}" class="editBtn">Edit</button>
         {% endfor %}
 
         <h1>Story templates</h1>
@@ -109,13 +118,16 @@
                 <input type="hidden" name="actual_method" value="DELETE">
                 <button>Delete</button>
             </form>
-            <form action=" {% url 'template_element' template_id=template.id %}" method="POST">
-                {% csrf_token %}
-                    <textarea id="template" name="template" rows="3" cols="50">{{ template }}
-                    </textarea>
-                    <input type="hidden" name="actual_method" value="PUT">
-                    <button>Update</button>
-            </form>
+            <div class="editForm-{{template.id}} isHidden">
+                <form action=" {% url 'template_element' template_id=template.id %}" method="POST">
+                    {% csrf_token %}
+                        <textarea id="template" name="template" rows="3" cols="50">{{ template }}
+                        </textarea>
+                        <input type="hidden" name="actual_method" value="PUT">
+                        <button>Update</button>
+                </form>
+            </div>
+            <button id="editBtn-{{template.id}}" class="editBtn">Edit</button>
         {% endfor %}
 
 
@@ -212,7 +224,7 @@
         </div>
 
     <script>
-        Array.from(document.getElementsByClassName("editBtn")).forEach((element) =>                 element.addEventListener("click", function(){
+        Array.from(document.getElementsByClassName("editBtn")).forEach((element) => element.addEventListener("click", function(){
                 console.log("hello", this.id, this.nextElementSibling)
                 this.previousElementSibling.classList.toggle("isHidden")
             })
