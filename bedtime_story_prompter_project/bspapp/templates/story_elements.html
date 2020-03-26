@@ -21,11 +21,20 @@
         {% for hero in user.hero_set.all %}
             <form action="{% url 'hero_element' hero_id=hero.id %}" method="POST">
                 {% csrf_token %}
-                <label for={{ hero.id }}>{{ hero }}</label>
-                <input type="hidden" name="actual_method" value="DELETE">
-                <button>Delete</button>
+                    <label for={{ hero.id }}>{{ hero }}</label>
+                    <input type="hidden" name="actual_method" value="DELETE">
+                    <button>Delete</button>
+                    {% comment %} <button>Edit</button> {% endcomment %}
+                    {% comment %} <button onclick="editHero()">Edit</button> {% endcomment %}
+            </form>
+            <form action=" {% url 'hero_element' hero_id=hero.id %}" method="POST">
+                {% csrf_token %}
+                    <input type="text" id="hero" name="hero" value="{{ hero }}">
+                    <input type="hidden" name="actual_method" value="PUT">
+                    <button>Update</button>
             </form>
         {% endfor %}
+
 
         <h1>Villains</h1>
             <a class="w3-button" onclick="document.getElementById('id02').style.display='block'">
@@ -37,6 +46,12 @@
                 <label for={{ villain.id }}>{{ villain }}</label>
                 <input type="hidden" name="actual_method" value="DELETE">
                 <button>Delete</button>
+            </form>
+            <form action=" {% url 'villain_element' villain_id=villain.id %}" method="POST">
+                {% csrf_token %}
+                <input type="text" id="villain" name="villain" value="{{ villain }}">
+                <input type="hidden" name="actual_method" value="PUT">
+                <button>Update</button>
             </form>
         {% endfor %}
 
@@ -51,6 +66,12 @@
                 <input type="hidden" name="actual_method" value="DELETE">
                 <button>Delete</button>
             </form>
+            <form action=" {% url 'setting_element' setting_id=setting.id %}" method="POST">
+                {% csrf_token %}
+                    <input type="text" id="setting" name="setting" value="{{ setting }}">
+                    <input type="hidden" name="actual_method" value="PUT">
+                    <button>Update</button>
+            </form>
         {% endfor %}
 
         <h1>Challenges</h1>
@@ -63,6 +84,12 @@
                 <label for={{ challenge.id }}>{{ challenge }}</label>
                 <input type="hidden" name="actual_method" value="DELETE">
                 <button>Delete</button>
+            </form>
+            <form action=" {% url 'challenge_element' challenge_id=challenge.id %}" method="POST">
+                {% csrf_token %}
+                    <input type="text" id="challenge" name="challenge" value="{{ challenge }}">
+                    <input type="hidden" name="actual_method" value="PUT">
+                    <button>Update</button>
             </form>
         {% endfor %}
 
@@ -77,10 +104,15 @@
                 <input type="hidden" name="actual_method" value="DELETE">
                 <button>Delete</button>
             </form>
+            <form action=" {% url 'template_element' template_id=template.id %}" method="POST">
+                {% csrf_token %}
+                    <textarea id="template" name="template" rows="3" cols="50">{{ template }}
+                    </textarea>
+                    <input type="hidden" name="actual_method" value="PUT">
+                    <button>Update</button>
+            </form>
         {% endfor %}
-        {% comment %} {% for storyprompt in kid.storyprompt_set.all %}
-             <p>{{storyprompt}}</p>
-        {% endfor %} {% endcomment %}
+
 
         <!-- THE LIST OF MODALS FOR EACH STORY ELEMENTS -->
 

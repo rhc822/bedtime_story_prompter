@@ -29,9 +29,21 @@ def story_elements(request, hero_id=None, villain_id=None, setting_id=None, chal
             hero.delete()
             return redirect(reverse('story_elements'))
 
+        if ("actual_method" in form_data and form_data["actual_method"] == "PUT") and hero_id is not None:
+            hero = Hero.objects.get(pk=hero_id)
+            hero.name = form_data["hero"]
+            hero.save()
+            return redirect(reverse('story_elements'))
+
         if ("actual_method" in form_data and form_data["actual_method"] == "DELETE") and villain_id is not None:
             villain = Villain.objects.get(pk=villain_id)
             villain.delete()
+            return redirect(reverse('story_elements'))
+
+        if ("actual_method" in form_data and form_data["actual_method"] == "PUT") and villain_id is not None:
+            villain = Villain.objects.get(pk=villain_id)
+            villain.name = form_data["villain"]
+            villain.save()
             return redirect(reverse('story_elements'))
 
         if ("actual_method" in form_data and form_data["actual_method"] == "DELETE") and setting_id is not None:
@@ -39,14 +51,32 @@ def story_elements(request, hero_id=None, villain_id=None, setting_id=None, chal
             setting.delete()
             return redirect(reverse('story_elements'))
 
+        if ("actual_method" in form_data and form_data["actual_method"] == "PUT") and setting_id is not None:
+            setting = StorySetting.objects.get(pk=setting_id)
+            setting.description = form_data["setting"]
+            setting.save()
+            return redirect(reverse('story_elements'))
+
         if ("actual_method" in form_data and form_data["actual_method"] == "DELETE") and challenge_id is not None:
             challenge = Challenge.objects.get(pk=challenge_id)
             challenge.delete()
             return redirect(reverse('story_elements'))
 
+        if ("actual_method" in form_data and form_data["actual_method"] == "PUT") and challenge_id is not None:
+            challenge = Challenge.objects.get(pk=challenge_id)
+            challenge.description = form_data["challenge"]
+            challenge.save()
+            return redirect(reverse('story_elements'))
+
         if ("actual_method" in form_data and form_data["actual_method"] == "DELETE") and template_id is not None:
             template = StoryTemplate.objects.get(pk=template_id)
             template.delete()
+            return redirect(reverse('story_elements'))
+
+        if ("actual_method" in form_data and form_data["actual_method"] == "PUT") and template_id is not None:
+            template = StoryTemplate.objects.get(pk=template_id)
+            template.template = form_data["template"]
+            template.save()
             return redirect(reverse('story_elements'))
 
         else:
