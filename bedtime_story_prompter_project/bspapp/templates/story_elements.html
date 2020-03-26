@@ -106,8 +106,7 @@
             </form>
             <form action=" {% url 'template_element' template_id=template.id %}" method="POST">
                 {% csrf_token %}
-                    <textarea id="template" name="template" rows="3" cols="50">
-                        {{ template }}
+                    <textarea id="template" name="template" rows="3" cols="50">{{ template }}
                     </textarea>
                     <input type="hidden" name="actual_method" value="PUT">
                     <button>Update</button>
