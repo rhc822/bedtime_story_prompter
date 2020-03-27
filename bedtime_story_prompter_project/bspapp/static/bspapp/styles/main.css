@@ -1,10 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Sniglet:wght@800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Happy+Monkey&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
 
-html, body {
+body {
     font-family: "Comfortaa";
+    margin-top: 38px;
+    background-color: #483475;
+    color: white;
  }
 
 .isHidden {
@@ -13,4 +12,55 @@ html, body {
 
 h1,h2,h3,h4,h5,h6 {
     font-family: "Sniglet", verdana, sans-serif;
+    display: inline;
   }
+
+.navbar {
+    background-color: #141852;
+}
+
+.cards {
+    background-color: #ecdcfa;
+}
+
+.storyElementCardHeader {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background-color: #141852;
+}
+
+.allButtons {
+    background-color: #141852;
+    display: inline;
+}
+
+.textAreas {
+    background-color: #ecdcfa;
+    display: block;
+    margin-bottom: 20px;
+}
+
+#login_background_image {
+    position: fixed;
+    margin: 15px;
+    width: 75%;
+    height: auto;
+    z-index: -1;
+    background-size: cover;
+
+    /* Preserve aspet ratio */
+    /* min-width: 100%;
+    min-height: 100%; */
+}
+
+.loginCard {
+    position: fixed;
+    width: 25%;
+}
+
+#welcome {
+    position: fixed;
+    width: 30px;
+    top: 150px;
+    left: 50px;
+}

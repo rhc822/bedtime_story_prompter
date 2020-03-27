@@ -13,14 +13,16 @@
     <!-- The link below is access for font awesome icons -->
     <script src="https://kit.fontawesome.com/5669f665f1.js" crossorigin="anonymous"></script>
 
-    <!-- Google Font Sniglet font -->
-    <link href="https://fonts.googleapis.com/css2?family=Sniglet:wght@800&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sniglet&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+    {% comment %} <link href="https://fonts.googleapis.com/css2?family=Sniglet:wght@800&display=swap" rel="stylesheet"> {% endcomment %}
 </head>
 
 <body>
 
     <div class="w3-top">
-        <div class="w3-bar w3-black">
+        <div class="w3-bar w3-text-white navbar">
             <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-mobile">Stories</a>
             <a href="{% url 'create_new_story' %}" class="w3-bar-item w3-button w3-mobile">Create New Story</a>
             <a href="{% url 'story_elements' %}" class="w3-bar-item w3-button w3-mobile">Story Elements</a>
