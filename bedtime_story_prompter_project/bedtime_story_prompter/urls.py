@@ -26,8 +26,9 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('logout/', logout_user, name='logout'),
     path('create_new_story/', create_new_story, name='create_new_story'),
-    # path('storyelements/', story_elements, kwargs={"hero_id": "hero_id"}, name='story_elements'),
+    # The 'normal' story element url for simply getting the elements
     path('storyelements/', story_elements, name='story_elements'),
+    # The following are story element urls for deleting and editing various story elements
     path('storyelements/hero/<int:hero_id>', story_elements, name='hero_element'),
     path('storyelements/villain/<int:villain_id>', story_elements, name='villain_element'),
     path('storyelements/setting/<int:setting_id>', story_elements, name='setting_element'),

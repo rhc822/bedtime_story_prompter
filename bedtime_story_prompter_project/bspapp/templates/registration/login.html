@@ -2,9 +2,11 @@
 {% block content %}
 {% load static %}
 
+<!-- The login background image -->
 <img src="{% static "bspapp/daddy_reading_bedtime_story.jpeg" %}" id="login_background_image">
 <h1 id="welcome">Welcome to the Bedtime Story Prompter!</h1>
 
+<!-- The login card -->
     <div class="w3-round-large w3-margin w3-card w3-display-right cards loginCard">
         <header class="w3-container storyElementCardHeader">
             <h2>Please login</h2>
@@ -14,7 +16,7 @@
                 {% csrf_token %}
                 {{ form.as_p }}
                 <div class="w3-display-container" style="width: 100px; height: 50px;">
-                    <button class="w3-button w3-round-large w3-display-middle allButtons" type="submit" value="Save Story Prompt">Login</button>
+                    <button class="w3-button w3-round-large w3-display-middle allButtons" type="submit" value="Login">Login</button>
                 </div>
             </form>
         </div>

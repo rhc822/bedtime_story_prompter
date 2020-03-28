@@ -5,6 +5,10 @@ from django.contrib.auth.models import User
 from ..models.kid import Kid
 
 
+################################################################
+# BEFORE LOGGING IN, WHEN A USER CLICKS THE 'REGISTER' BUTTON IN THE NAVBAR, A URL REQUEST IS MADE FOR 'register/' AND THE 'register_user' FUNCTION IS CALLED INITIALLY ONLY DISPLAYING THE REGISTER TEMPLATE. WHEN A 'POST' CALL IS MADE, A USER (PARENT) INSTANCE IS CREATED, A KID INSTANCE IS CREATED, AND THE USER IS LOGGED IN.
+################################################################
+
 def register_user(request):
     """View method for handling creation of a new user for auth
         Args:
@@ -23,7 +27,7 @@ def register_user(request):
         # Second, make a kid after the user has been created
         kid = Kid.objects.create(
             user=new_user,
-            # If you have other form data to save on the new librarian, that isn't a property of the User model...
+            # This is other form data to save on the new user (parent) that isn't a property of the User model...
             kid_first_name=request.POST['kid_first_name']
         )
 

@@ -5,7 +5,7 @@
     <div class="w3-container">
       {% for kid in kids %}
           <h1>{{ kid.kid_first_name}}'s story prompts</h1>
-            {% for storyprompt in kid.storyprompt_set.all %}
+            {% for storyprompt in kid.storyprompt_set.all %} <!-- Gets all the kid's story prompts -->
               <div class="w3-container w3-card w3-margin w3-round-large w3-text-black cards">
                 <p>{{storyprompt}}</p>
               </div>

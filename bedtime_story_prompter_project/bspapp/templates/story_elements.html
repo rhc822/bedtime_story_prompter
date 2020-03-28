@@ -3,22 +3,32 @@
 {% block content %}
 
 
+<!-- ################################################################
+THIS TEMPLATE HANDLES THE MOST COMPLEX SECTION OF THE APP, THE STORY ELEMENTS. EACH STORY ELEMENT CATEGORY AND SUBSEQUENT ITEMS ARE DISPLAYED, CAN BE EDITED OR DELETED. FUTHERMORE, NEW ITEMS FOR EACH CATEGORY CAN BE CREATED.
+################################################################ -->
+
     <div class="w3-container">
+        <!-- The hero card -->
         <div class="w3-round-large w3-margin w3-card cards">
             <header class="w3-container storyElementCardHeader">
                 <h1>Heroes</h1>
+                <!-- Create new hero button -->
                 <a class="w3-button" onclick="document.getElementById('id01').style.display='block'">
                     <i class="fas fa-plus-circle w3-xxlarge" ></i>
                 </a>
             </header>
             <div class="w3-container">
                 {% for hero in user.hero_set.all %}
+                {% comment %} '_set' is a Django reserved ORM method to get an array of items with this object's foreign key from another table. {% endcomment %}
+                    <!-- Delete hero section -->
                     <form action="{% url 'hero_element' hero_id=hero.id %}" method="POST">
                         {% csrf_token %}
                             <label class="w3-text-black" for={{ hero.id }}>{{ hero }}</label>
                             <input type="hidden" name="actual_method" value="DELETE">
                             <button>Delete</button>
                     </form>
+
+                    <!-- Edit (Update) hero section-->
                     <div class="editForm-{{hero.id}} isHidden">
                         <form action=" {% url 'hero_element' hero_id=hero.id %}" method="POST">
                             {% csrf_token %}
@@ -33,6 +43,7 @@
             </div>
         </div>
 
+        <!-- The villain card -->
         <div class="w3-round-large w3-margin w3-card cards">
             <header class="w3-container storyElementCardHeader">
                 <h1>Villains</h1>
@@ -61,7 +72,7 @@
             </div>
         </div>
 
-
+        <!-- The setting card -->
         <div class="w3-round-large w3-margin w3-card cards">
             <header class="w3-container storyElementCardHeader">
                 <h1>Settings</h1>
@@ -90,7 +101,7 @@
             </div>
         </div>
 
-
+        <!-- The challenge card -->
         <div class="w3-round-large w3-margin w3-card cards">
             <header class="w3-container storyElementCardHeader">
                 <h1>Challenges</h1>
@@ -119,6 +130,7 @@
             </div>
         </div>
 
+        <!-- The story templates card -->
         <div class="w3-round-large w3-margin w3-card cards">
             <header class="w3-container storyElementCardHeader">
                 <h1>Story Templates</h1>
@@ -252,6 +264,8 @@
             </div>
         </div>
 
+
+<!-- Script for editing a story element -->
     <script>
         Array.from(document.getElementsByClassName("editBtn")).forEach((element) => element.addEventListener("click", function(){
                 console.log("hello", this.id, this.nextElementSibling)
