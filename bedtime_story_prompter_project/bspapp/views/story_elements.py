@@ -9,8 +9,12 @@ from ..models.story_template import StoryTemplate
 from ..models.story_setting import StorySetting
 
 
+################################################################
+# WHEN A USER CLICKS THE 'STORY ELEMENTS' BUTTON IN THE NAVBAR, A URL REQUEST IS MADE FOR 'storyelements/' AND THE 'story_elements' FUNCTION IS CALLED INITIALLY WITH A 'GET' REQUEST FOR THE USER OBJECT USING THE ORM. WHEN A 'POST' CALL IS MADE, THE REQUEST GOES THROUGH A SERIES OF CONDITIONS TO DETERMINE WHERE THE REQUEST NEEDS TO BE ROUTED, WHETHER THE 'POST' REQUEST IS ACTUALLY A 'PUT', A 'DELETE', OR ELSE WHETHER IT'S CREATING A NEW ITEM (.SAVE).
+################################################################
+
 @login_required
-def story_elements(request, hero_id=None, villain_id=None, setting_id=None, challenge_id=None, template_id=None):
+def story_elements(request, hero_id=None, villain_id=None, setting_id=None, challenge_id=None, template_id=None): # These parameters are necessary in the 'POST' section and must be set to None to avoid the GET request thinking it needs to use them in some way.
     if request.method == 'GET':
         user = User.objects.get(pk=request.user.id)
         template = 'story_elements.html'
@@ -23,6 +27,8 @@ def story_elements(request, hero_id=None, villain_id=None, setting_id=None, chal
     elif request.method == 'POST':
         form_data = request.POST
         user = User.objects.get(pk=request.user.id)
+
+        # Since a browser can only POST or GET, I used the hidden input to send the actual method (of a DELETE or PUT). I then compared the value of the story element id that was also sent in the same request to the value of None (originally set as a parameter at the beginning of the function call).
 
         if ("actual_method" in form_data and form_data["actual_method"] == "DELETE") and hero_id is not None:
             hero = Hero.objects.get(pk=hero_id)
@@ -79,6 +85,8 @@ def story_elements(request, hero_id=None, villain_id=None, setting_id=None, chal
             template.save()
             return redirect(reverse('story_elements'))
 
+        # If the above conditions don't execute, the code then goes through a sequence of 'try' and 'excepts' that form the "create" portion of the condition list.
+
         else:
             try:
                 new_hero = Hero(
@@ -120,18 +128,3 @@ def story_elements(request, hero_id=None, villain_id=None, setting_id=None, chal
 
 
         return redirect(reverse('story_elements'))
-
-
-    # if request.method == 'GET':
-
-    #     for user in kids:
-    #         for storyprompt in kid.storyprompt_set.all():
-    #             print(storyprompt) # This prints the story prompts in the terminal.
-    #         # print("********************", kid.storyprompt_set.all() ) # _set is a Django reserved ORM method to get an array of items with this object's foreign key from another table.
-    #     template = 'home.html'
-    #     context = {
-    #         "kids": kids
-    #     }
-
-    #     return render(request, template, context)
-

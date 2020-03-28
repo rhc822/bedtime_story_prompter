@@ -5,25 +5,35 @@
 <head>
     <meta charset="utf-8">
     <title>Bedtime story app</title>
+    <!-- The link below is access to W3C CSS framework -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
     <link rel="stylesheet" type="text/css" href="{% static 'bspapp/styles/main.css' %}" />
+
+    <!-- The link below is access for font awesome icons -->
+    <script src="https://kit.fontawesome.com/5669f665f1.js" crossorigin="anonymous"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sniglet&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
 </head>
 
 <body>
-
-
-    <nav id="site-nav">
-        <ol class="navList">
-            <li class="navList__route"><a href="{% url 'home' %}">Stories</a></li>
-            <li class="navList__route"><a href="{% url 'create_new_story' %}">Create New Story</a></li>
-            <li class="navList__route"><a href="{% url 'story_elements' %}">Story Elements</a></li>
+<!-- The Navigation Bar (NavBar)-->
+    <div class="w3-top">
+        <div class="w3-bar w3-text-white navbar">
+            <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-mobile">Stories</a>
+            <a href="{% url 'create_new_story' %}" class="w3-bar-item w3-button w3-mobile">Create New Story</a>
+            <a href="{% url 'story_elements' %}" class="w3-bar-item w3-button w3-mobile">Story Elements</a>
             {% if user.is_authenticated %}
-            <li class="navList__route"><a href="{% url 'logout' %}">Logout</a></li>
+            <!-- Condition to show/hide login/register options -->
+            <a href="{% url 'logout' %}" class="w3-bar-item w3-button w3-mobile w3-right">Logout</a>
             {% else %}
-            <li class="navList__route"><a href="{% url 'login' %}">Login</a></li>
-            <li class="navList__route"><a href="{% url 'register' %}">Register</a></li>
+            <a href="{% url 'login' %}" class="w3-bar-item w3-button w3-mobile w3-right">Login</a>
+            <a href="{% url 'register' %}" class="w3-bar-item w3-button w3-mobile w3-right">Register</a>
             {% endif %}
-        </ol>
-    </nav>
+        </div>
+    </div>
 
     {% block content %}
     {% endblock %}

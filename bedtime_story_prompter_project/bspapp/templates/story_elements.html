@@ -2,134 +2,165 @@
 {% load static %}
 {% block content %}
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <!-- The link below is access to W3C CSS framework -->
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-     <!-- The link below is access for font awesome icons -->
-    <script src="https://kit.fontawesome.com/5669f665f1.js" crossorigin="anonymous"></script>
-    <meta charset="utf-8">
-    <title>Story element view</title>
-  </head>
+<!-- ################################################################
+THIS TEMPLATE HANDLES THE MOST COMPLEX SECTION OF THE APP, THE STORY ELEMENTS. EACH STORY ELEMENT CATEGORY AND SUBSEQUENT ITEMS ARE DISPLAYED, CAN BE EDITED OR DELETED. FUTHERMORE, NEW ITEMS FOR EACH CATEGORY CAN BE CREATED.
+################################################################ -->
 
-  <body>
-        <h1>Heroes</h1>
-            <a class="w3-button" onclick="document.getElementById('id01').style.display='block'">
-                <i class="fas fa-plus-circle" ></i>
-            </a>
-        {% for hero in user.hero_set.all %}
-            <form action="{% url 'hero_element' hero_id=hero.id %}" method="POST">
-                {% csrf_token %}
-                    <label for={{ hero.id }}>{{ hero }}</label>
-                    <input type="hidden" name="actual_method" value="DELETE">
-                    <button>Delete</button>
-                    {% comment %} <button>Edit</button> {% endcomment %}
-            </form>
+    <div class="w3-container">
+        <!-- The hero card -->
+        <div class="w3-round-large w3-margin w3-card cards">
+            <header class="w3-container storyElementCardHeader">
+                <h1>Heroes</h1>
+                <!-- Create new hero button -->
+                <a class="w3-button" onclick="document.getElementById('id01').style.display='block'">
+                    <i class="fas fa-plus-circle w3-xxlarge" ></i>
+                </a>
+            </header>
+            <div class="w3-container">
+                {% for hero in user.hero_set.all %}
+                {% comment %} '_set' is a Django reserved ORM method to get an array of items with this object's foreign key from another table. {% endcomment %}
+                    <!-- Delete hero section -->
+                    <form action="{% url 'hero_element' hero_id=hero.id %}" method="POST">
+                        {% csrf_token %}
+                            <label class="w3-text-black" for={{ hero.id }}>{{ hero }}</label>
+                            <input type="hidden" name="actual_method" value="DELETE">
+                            <button>Delete</button>
+                    </form>
 
-            <div class="editForm-{{hero.id}} isHidden">
-                <form action=" {% url 'hero_element' hero_id=hero.id %}" method="POST">
-                    {% csrf_token %}
-                        <input type="text" id="hero" name="hero" value="{{ hero }}">
-                        <input type="hidden" name="actual_method" value="PUT">
-                        <button>Update</button>
-                </form>
+                    <!-- Edit (Update) hero section-->
+                    <div class="editForm-{{hero.id}} isHidden">
+                        <form action=" {% url 'hero_element' hero_id=hero.id %}" method="POST">
+                            {% csrf_token %}
+                                <input type="text" id="hero" name="hero" value="{{ hero }}">
+                                <input type="hidden" name="actual_method" value="PUT">
+                                <button>Update</button>
+                        </form>
+                    </div>
+                    <button id="editBtn-{{hero.id}}" class="editBtn">Edit</button>
+
+                {% endfor %}
             </div>
+        </div>
 
-            <button id="editBtn-{{hero.id}}" class="editBtn">Edit</button>
-        {% endfor %}
-
-
-        <h1>Villains</h1>
-            <a class="w3-button" onclick="document.getElementById('id02').style.display='block'">
-                <i class="fas fa-plus-circle"></i>
-            </a>
-        {% for villain in user.villain_set.all %}
-            <form action="{% url 'villain_element' villain_id=villain.id %}" method="POST">
-                {% csrf_token %}
-                <label for={{ villain.id }}>{{ villain }}</label>
-                <input type="hidden" name="actual_method" value="DELETE">
-                <button>Delete</button>
-            </form>
-            <div class="editForm-{{villain.id}} isHidden">
-                <form action=" {% url 'villain_element' villain_id=villain.id %}" method="POST">
-                    {% csrf_token %}
-                    <input type="text" id="villain" name="villain" value="{{ villain }}">
-                    <input type="hidden" name="actual_method" value="PUT">
-                    <button>Update</button>
-                </form>
+        <!-- The villain card -->
+        <div class="w3-round-large w3-margin w3-card cards">
+            <header class="w3-container storyElementCardHeader">
+                <h1>Villains</h1>
+                <a class="w3-button" onclick="document.getElementById('id02').style.display='block'">
+                    <i class="fas fa-plus-circle w3-xxlarge" ></i>
+                </a>
+            </header>
+            <div class="w3-container">
+                {% for villain in user.villain_set.all %}
+                    <form action="{% url 'villain_element' villain_id=villain.id %}" method="POST">
+                        {% csrf_token %}
+                        <label class="w3-text-black" for={{ villain.id }}>{{ villain }}</label>
+                        <input type="hidden" name="actual_method" value="DELETE">
+                        <button>Delete</button>
+                    </form>
+                    <div class="editForm-{{villain.id}} isHidden">
+                        <form action=" {% url 'villain_element' villain_id=villain.id %}" method="POST">
+                            {% csrf_token %}
+                            <input type="text" id="villain" name="villain" value="{{ villain }}">
+                            <input type="hidden" name="actual_method" value="PUT">
+                            <button>Update</button>
+                        </form>
+                    </div>
+                    <button id="editBtn-{{villain.id}}" class="editBtn">Edit</button>
+                {% endfor %}
             </div>
-            <button id="editBtn-{{villain.id}}" class="editBtn">Edit</button>
-        {% endfor %}
+        </div>
 
-        <h1>Settings</h1>
-            <a class="w3-button" onclick="document.getElementById('id03').style.display='block'">
-                <i class="fas fa-plus-circle"></i>
-            </a>
-        {% for setting in user.storysetting_set.all %}
-            <form action="{% url 'setting_element' setting_id=setting.id %}" method="POST">
-                {% csrf_token %}
-                <label for={{ setting.id }}>{{ setting }}</label>
-                <input type="hidden" name="actual_method" value="DELETE">
-                <button>Delete</button>
-            </form>
-            <div class="editForm-{{setting.id}} isHidden">
-                <form action=" {% url 'setting_element' setting_id=setting.id %}" method="POST">
-                    {% csrf_token %}
-                        <input type="text" id="setting" name="setting" value="{{ setting }}">
-                        <input type="hidden" name="actual_method" value="PUT">
-                        <button>Update</button>
-                </form>
+        <!-- The setting card -->
+        <div class="w3-round-large w3-margin w3-card cards">
+            <header class="w3-container storyElementCardHeader">
+                <h1>Settings</h1>
+                <a class="w3-button" onclick="document.getElementById('id03').style.display='block'">
+                    <i class="fas fa-plus-circle w3-xxlarge" ></i>
+                </a>
+            </header>
+            <div class="w3-container">
+                {% for setting in user.storysetting_set.all %}
+                    <form action="{% url 'setting_element' setting_id=setting.id %}" method="POST">
+                        {% csrf_token %}
+                        <label class="w3-text-black" for={{ setting.id }}>{{ setting }}</label>
+                        <input type="hidden" name="actual_method" value="DELETE">
+                        <button>Delete</button>
+                    </form>
+                    <div class="editForm-{{setting.id}} isHidden">
+                        <form action=" {% url 'setting_element' setting_id=setting.id %}" method="POST">
+                            {% csrf_token %}
+                                <input type="text" id="setting" name="setting" value="{{ setting }}">
+                                <input type="hidden" name="actual_method" value="PUT">
+                                <button>Update</button>
+                        </form>
+                    </div>
+                    <button id="editBtn-{{setting.id}}" class="editBtn">Edit</button>
+                {% endfor %}
             </div>
-            <button id="editBtn-{{setting.id}}" class="editBtn">Edit</button>
-        {% endfor %}
+        </div>
 
-        <h1>Challenges</h1>
-            <a class="w3-button" onclick="document.getElementById('id04').style.display='block'">
-                <i class="fas fa-plus-circle"></i>
-            </a>
-        {% for challenge in user.challenge_set.all %}
-            <form action="{% url 'challenge_element' challenge_id=challenge.id %}" method="POST">
-                {% csrf_token %}
-                <label for={{ challenge.id }}>{{ challenge }}</label>
-                <input type="hidden" name="actual_method" value="DELETE">
-                <button>Delete</button>
-            </form>
-            <div class="editForm-{{challenge.id}} isHidden">
-                <form action=" {% url 'challenge_element' challenge_id=challenge.id %}" method="POST">
-                    {% csrf_token %}
-                        <input type="text" id="challenge" name="challenge" value="{{ challenge }}">
-                        <input type="hidden" name="actual_method" value="PUT">
-                        <button>Update</button>
-                </form>
+        <!-- The challenge card -->
+        <div class="w3-round-large w3-margin w3-card cards">
+            <header class="w3-container storyElementCardHeader">
+                <h1>Challenges</h1>
+                <a class="w3-button" onclick="document.getElementById('id04').style.display='block'">
+                    <i class="fas fa-plus-circle w3-xxlarge" ></i>
+                </a>
+            </header>
+            <div class="w3-container">
+                {% for challenge in user.challenge_set.all %}
+                    <form action="{% url 'challenge_element' challenge_id=challenge.id %}" method="POST">
+                        {% csrf_token %}
+                        <label class="w3-text-black" for={{ challenge.id }}>{{ challenge }}</label>
+                        <input type="hidden" name="actual_method" value="DELETE">
+                        <button>Delete</button>
+                    </form>
+                    <div class="editForm-{{challenge.id}} isHidden">
+                        <form action=" {% url 'challenge_element' challenge_id=challenge.id %}" method="POST">
+                            {% csrf_token %}
+                                <input type="text" id="challenge" name="challenge" value="{{ challenge }}">
+                                <input type="hidden" name="actual_method" value="PUT">
+                                <button>Update</button>
+                        </form>
+                    </div>
+                    <button id="editBtn-{{challenge.id}}" class="editBtn">Edit</button>
+                {% endfor %}
             </div>
-            <button id="editBtn-{{challenge.id}}" class="editBtn">Edit</button>
-        {% endfor %}
+        </div>
 
-        <h1>Story templates</h1>
-            <a class="w3-button" onclick="document.getElementById('id05').style.display='block'">
-                <i class="fas fa-plus-circle"></i>
-            </a>
-        {% for template in user.storytemplate_set.all %}
-            <form action="{% url 'template_element' template_id=template.id %}" method="POST">
-                {% csrf_token %}
-                <label for={{ template.id }}>{{ template }}</label>
-                <input type="hidden" name="actual_method" value="DELETE">
-                <button>Delete</button>
-            </form>
-            <div class="editForm-{{template.id}} isHidden">
-                <form action=" {% url 'template_element' template_id=template.id %}" method="POST">
-                    {% csrf_token %}
-                        <textarea id="template" name="template" rows="3" cols="50">{{ template }}
-                        </textarea>
-                        <input type="hidden" name="actual_method" value="PUT">
-                        <button>Update</button>
-                </form>
+        <!-- The story templates card -->
+        <div class="w3-round-large w3-margin w3-card cards">
+            <header class="w3-container storyElementCardHeader">
+                <h1>Story Templates</h1>
+                <a class="w3-button" onclick="document.getElementById('id05').style.display='block'">
+                    <i class="fas fa-plus-circle w3-xxlarge" ></i>
+                </a>
+            </header>
+            <div class="w3-container">
+                {% for template in user.storytemplate_set.all %}
+                    <form action="{% url 'template_element' template_id=template.id %}" method="POST">
+                        {% csrf_token %}
+                        <label class="w3-text-black" for={{ template.id }}>{{ template }}</label>
+                        <input type="hidden" name="actual_method" value="DELETE">
+                        <button>Delete</button>
+                    </form>
+                    <div class="editForm-{{template.id}} isHidden">
+                        <form action=" {% url 'template_element' template_id=template.id %}" method="POST">
+                            {% csrf_token %}
+                                <textarea id="template" name="template" rows="3" cols="50">{{ template }}
+                                </textarea>
+                                <input type="hidden" name="actual_method" value="PUT">
+                                <button>Update</button>
+                        </form>
+                    </div>
+                    <button id="editBtn-{{template.id}}" class="editBtn">Edit</button>
+                {% endfor %}
             </div>
-            <button id="editBtn-{{template.id}}" class="editBtn">Edit</button>
-        {% endfor %}
+        </div>
 
+    </div>
 
         <!-- THE LIST OF MODALS FOR EACH STORY ELEMENTS -->
 
@@ -138,13 +169,15 @@
             <div class="w3-modal-content">
                 <div class="w3-container">
                 <span onclick="document.getElementById('id01').style.display='none'"
-                class="w3-button w3-display-topright">&times;</span>
+                class="w3-button w3-display-topright w3-black">&times;</span>
                 <form class="w3-container" action="{% url 'story_elements' %}" method="post">
                     {% csrf_token %}
                         <div class="w3-section">
-                        <label></label>
-                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter a new hero's name" name="hero" required>
-                        <button type="submit" class="w3-button w3-block w3-green w3-section w3-padding">Create</button>
+                            <label></label>
+                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter a new hero's name" name="hero" required>
+                            <div class="w3-display-container" style="width: 836px; height: 50px;">
+                                <button type="submit" class="w3-button w3-round-large w3-display-middle allButtons">Create</button>
+                            </div>
                         </div>
                 </form>
                 </div>
@@ -156,13 +189,15 @@
             <div class="w3-modal-content">
                 <div class="w3-container">
                 <span onclick="document.getElementById('id02').style.display='none'"
-                class="w3-button w3-display-topright">&times;</span>
+                class="w3-button w3-display-topright w3-black">&times;</span>
                 <form class="w3-container" action="{% url 'story_elements' %}" method="post">
                     {% csrf_token %}
                         <div class="w3-section">
-                        <label></label>
-                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter a new villain's name" name="villain" required>
-                        <button type="submit" class="w3-button w3-block w3-green w3-section w3-padding">Create</button>
+                            <label></label>
+                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter a new villain's name" name="villain" required>
+                            <div class="w3-display-container" style="width: 836px; height: 50px;">
+                                <button type="submit" class="w3-button w3-round-large w3-display-middle allButtons">Create</button>
+                            </div>
                         </div>
                 </form>
                 </div>
@@ -174,13 +209,15 @@
             <div class="w3-modal-content">
                 <div class="w3-container">
                 <span onclick="document.getElementById('id03').style.display='none'"
-                class="w3-button w3-display-topright">&times;</span>
+                class="w3-button w3-display-topright w3-black">&times;</span>
                 <form class="w3-container" action="{% url 'story_elements' %}" method="post">
                     {% csrf_token %}
                         <div class="w3-section">
-                        <label></label>
-                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter a new setting" name="setting" required>
-                        <button type="submit" class="w3-button w3-block w3-green w3-section w3-padding">Create</button>
+                            <label></label>
+                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter a new setting" name="setting" required>
+                            <div class="w3-display-container" style="width: 836px; height: 50px;">
+                                <button type="submit" class="w3-button w3-round-large w3-display-middle allButtons">Create</button>
+                            </div>
                         </div>
                 </form>
                 </div>
@@ -192,13 +229,15 @@
             <div class="w3-modal-content">
                 <div class="w3-container">
                 <span onclick="document.getElementById('id04').style.display='none'"
-                class="w3-button w3-display-topright">&times;</span>
+                class="w3-button w3-display-topright w3-black">&times;</span>
                 <form class="w3-container" action="{% url 'story_elements' %}" method="post">
                     {% csrf_token %}
                         <div class="w3-section">
-                        <label></label>
-                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter a new challenge/obstacle for the hero" name="challenge" required>
-                        <button type="submit" class="w3-button w3-block w3-green w3-section w3-padding">Create</button>
+                            <label></label>
+                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter a new challenge/obstacle for the hero" name="challenge" required>
+                            <div class="w3-display-container" style="width: 836px; height: 50px;">
+                                <button type="submit" class="w3-button w3-round-large w3-display-middle allButtons">Create</button>
+                            </div>
                         </div>
                 </form>
                 </div>
@@ -210,19 +249,23 @@
             <div class="w3-modal-content">
                 <div class="w3-container">
                 <span onclick="document.getElementById('id05').style.display='none'"
-                class="w3-button w3-display-topright">&times;</span>
+                class="w3-button w3-display-topright w3-black">&times;</span>
                 <form class="w3-container" action="{% url 'story_elements' %}" method="post">
                     {% csrf_token %}
                         <div class="w3-section">
-                        <label></label>
-                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter a new story template" name="template" required>
-                        <button type="submit" class="w3-button w3-block w3-green w3-section w3-padding">Create</button>
+                            <label></label>
+                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter a new story template" name="template" required>
+                            <div class="w3-display-container" style="width: 836px; height: 50px;">
+                                <button type="submit" class="w3-button w3-round-large w3-display-middle allButtons">Create</button>
+                            </div>
                         </div>
                 </form>
                 </div>
             </div>
         </div>
 
+
+<!-- Script for editing a story element -->
     <script>
         Array.from(document.getElementsByClassName("editBtn")).forEach((element) => element.addEventListener("click", function(){
                 console.log("hello", this.id, this.nextElementSibling)
@@ -231,8 +274,5 @@
         )
 
     </script>
-
-  </body>
-</html>
 
 {% endblock %}
