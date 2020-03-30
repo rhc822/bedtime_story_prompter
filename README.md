@@ -26,4 +26,5 @@ I put my two small kids down to sleep every night and love telling them stories.
    1. Click __Create New Story__ to generate a new random story prompt
 1. To add story element items, click __Story Elements__
 
+
 Happy story telling!
